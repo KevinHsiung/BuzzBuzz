@@ -1,0 +1,18 @@
+
+
+
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="row g-3 p-2" style="width:500px;margin-left: auto; margin-right: auto;">
+    <button type="button" class="btn btn-secondary" style="margin-left: 0.5rem;margin-bottom:0.5rem; width:fit-content;" (click)="goBack()">Back</button>
+    <h3 class="p-2">{{isNewProduct ? 'Add': 'Edit' }} Product {{productForm.get('name')?.value}} </h3>
+    <div class="col-12">
+        <label for="inputAddress" class="form-label">Name</label>
+        <input formControlName="name" type="text" class="form-control" id="floatingInput" placeholder="Enter name">
+    </div>
+      <div class="col-12">
+        <label for="inputAddress2" class="form-label">Price</label>
+        <input formControlName="price"  type="number" class="form-control" id="floatingPassword" placeholder="Enter Price">
+        </div>
+    <div class="col-12">
+      <button [disabled]="!productForm.valid" type="submit" class="btn btn-primary" style="width:100%">Save</button>
+    </div>
+  </form>

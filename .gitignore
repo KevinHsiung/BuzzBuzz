@@ -1,0 +1,49 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Compiled output
+/BuzzBuzzClient/dist
+/BuzzBuzzClient/tmp
+/BuzzBuzzClient/out-tsc
+/BuzzBuzzClient/bazel-out
+
+# Node
+/BuzzBuzzClient/node_modules
+/BuzzBuzzClient/npm-debug.log
+/BuzzBuzzClient/yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+/BuzzBuzzClient.vscode/*
+/BuzzBuzzClient!.vscode/settings.json
+/BuzzBuzzClient!.vscode/tasks.json
+/BuzzBuzzClient!.vscode/launch.json
+/BuzzBuzzClient!.vscode/extensions.json
+/BuzzBuzzClient.history/*
+
+# Miscellaneous
+/BuzzBuzzClient/.angular/cache
+/BuzzBuzzClient/.sass-cache/
+/BuzzBuzzClient/connect.lock
+/BuzzBuzzClient/coverage
+/BuzzBuzzClient/libpeerconnection.log
+/BuzzBuzzClient/testem.log
+/BuzzBuzzClient/typings
+
+# System files
+/BuzzBuzzClient/.DS_Store
+/BuzzBuzzClient/Thumbs.db
+
+*/bin
+
+.vs
+
+/BuzzBuzzServer/BuzzBuzzServer/bin/*
+/BuzzBuzzServer/BuzzBuzzServer/obj/*

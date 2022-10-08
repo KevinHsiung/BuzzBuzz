@@ -1,0 +1,28 @@
+.btn{
+    border:0;
+    &.active.asc{
+        .fa-sort-up{
+            color:red;
+        }
+    }
+
+    &.active.desc{
+        .fa-sort-down{
+            color:red;
+        }
+    }
+}
+
+table{
+    & tbody{
+        cursor: pointer;
+    }
+}
+
+.pagination{
+    display:flex;
+    justify-content: space-between;
+    .form-select{
+        max-width:100px;
+    }
+}

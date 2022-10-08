@@ -1,0 +1,91 @@
+<div style="display: flex;justify-content: space-between;">
+<h3> Products ({{products.length}})</h3>
+<button class="btn btn-success"  [routerLink]="addProductUrl">Add Product</button>
+</div>
+<div class="container-fluid p-2">
+    <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">
+                <button id="sort-id" class="btn {{idSortAscending?'asc': 'desc'}}" [class.active]="activesort == 'id'"  type="button" (click)="OnSort('id')">
+                    <span>Product ID</span>
+                    <span class="fa-stack">
+                        <i class="fas fa-sort-up fa-stack-1x"></i>
+                        <i class="fas fa-sort-down fa-stack-1x"></i>
+                    </span>
+                </button>
+            </th>
+            <th scope="col">
+                <button id="sort-name" class="btn {{nameSortAscending?'asc': 'desc'}}" [class.active]="activesort == 'name'" type="button" (click)="OnSort('name')">
+                    <span>Product Name</span>
+                    <span class="fa-stack">
+                        <i class="fas fa-sort-up fa-stack-1x"></i>
+                        <i class="fas fa-sort-down fa-stack-1x"></i>
+                    </span>
+                </button>
+            </th>
+            <th scope="col">
+                <button id="sort-price" class="btn {{priceSortAscending?'asc': 'desc'}}" [class.active]="activesort == 'price'" type="button" (click)="OnSort('price')">
+                    <span>Product Price</span>
+                    <span class="fa-stack">
+                        <i class="fas fa-sort-up fa-stack-1x"></i>
+                        <i class="fas fa-sort-down fa-stack-1x"></i>
+                    </span>
+                </button>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody class=" table-hover">
+          <tr *ngFor="let product of products | slice: (page-1) * pageSize : page * pageSize" class="product-row">
+            <th (click)="editForm(product.id, product.customerId)" scope="row">{{product.id}}</th>
+            <td (click)="editForm(product.id, product.customerId)">{{product.name}}</td>
+            <td (click)="editForm(product.id, product.customerId)">{{product.price | currency}}</td>
+            <td>
+                <div class="btn-group">
+                    <a style="cursor:pointer; font-size:20px; z-index:100" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                      ...
+                    </a>
+                    <ul class="dropdown-menu dropstart">
+                        <li>
+                            <span style="cursor:pointer" class="dropdown-item" (click)="setProductId(product.id, product.name)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Delete                      
+                            </span>
+                        </li>
+                    </ul>
+                  </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pagination" >
+        <select class="form-select" [(ngModel)]="pageSize" aria-label="Default select example">            
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+      <ngb-pagination
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [maxSize]="5" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+        [collectionSize]="products.length"></ngb-pagination>
+    </div>
+      <div class="modal" id="exampleModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirm Delete?</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to delete {{productName}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+              <button type="button" data-bs-dismiss="modal" (click)="OnDelete(productId)" class="btn btn-primary">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
