@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Customer } from 'src/app/models/customer';
 import { CustomerService } from 'src/app/services/customer.service';
 
@@ -9,25 +8,28 @@ import { CustomerService } from 'src/app/services/customer.service';
   styleUrls: ['./customer.component.scss']
 })
 export class CustomerComponent implements OnInit {
-  constructor( private router: Router,
-    private route:ActivatedRoute, 
-    private customerService:CustomerService) { }
+  constructor(private customerService:CustomerService) { }
 
+  title = 'buzzbuzz-coding-exercise';
+  allCustomers! :Customer[];
   customer!: Customer;
+
   
   ngOnInit(): void {
-    this.GetCustomer();
-    this.router.events.subscribe((val) =>{
-      if(val instanceof NavigationEnd)
-      {
-        this.GetCustomer();
-      }
-    })
+    this.populateDropdown();
   }
 
-  GetCustomer(): void {
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
+  populateDropdown(){
+    this.customerService.getAll().subscribe((customers)=> {
+      this.allCustomers = customers;
+    });
+  }
+  
+  
+  GetCustomer(id:number): void {
     this.customerService.getCustomer(id)
       .subscribe((customer:Customer) => this.customer = customer);
   }
+
+
 }

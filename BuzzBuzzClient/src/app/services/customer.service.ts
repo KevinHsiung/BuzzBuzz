@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Customer } from '../models/customer';
 
@@ -9,7 +9,10 @@ import { Customer } from '../models/customer';
   providedIn: 'root'
 })
 export class CustomerService {
-  url = "https://localhost:44354/api/customer"
+  url = "https://localhost:44354/api/customer";
+  private customerIdSubject = new Subject<[string,number]>();
+  customerId = this.customerIdSubject.asObservable();
+  
   constructor(private httpClient: HttpClient) { }
 
   getAll():Observable<any>{
@@ -20,7 +23,11 @@ export class CustomerService {
 
   getCustomer(id: number):Observable<any>{
     return this.httpClient.get(`${this.url}/${id}`).pipe(
-      tap(x => console.log(x)),
+      tap((x:any) => {console.log(x);this.changeCustomerId(x.name,id);}),
     );;
+  }
+
+  changeCustomerId(name:string,id: number) {
+    this.customerIdSubject.next([name,id]);
   }
 }

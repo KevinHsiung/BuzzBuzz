@@ -91,5 +91,36 @@ namespace BuzzBuzzServer.Controllers
             }
             return BadRequest();
         }
+
+        [HttpGet]
+        [Route("GetAllByCustomerId/{id}")]
+        public ActionResult GetAllByCustomerId([FromRoute] int id)
+        {
+            var product = _context.Products.Where(x => x.CustomerId == id).ToList() ;
+            return Ok(product);
+        }
+
+        [HttpGet]
+        [Route("GetProductWithFilter")]
+        public ActionResult GetProductWithFilter(int id, int skip, int take, bool isAsc = true, string column = "id")
+        {
+            var total = _context.Products.Count(x => x.CustomerId == id);
+            var products = _context.Products.Where(x => x.CustomerId == id).Skip(skip).Take(take);
+            switch (column)
+            {
+                case "name":
+                    products = isAsc ? products.OrderBy(x => x.Name) : products.OrderByDescending(x => x.Name);
+                    break;
+                case "price":
+                    products = isAsc ? products.OrderBy(x => x.Price) : products.OrderByDescending(x => x.Price);
+                    break;
+                default:
+                    products = isAsc ? products.OrderBy(x => x.Id) : products.OrderByDescending(x => x.Id);
+                    break;
+            }
+
+            return Ok(new { total, products = products.ToList()});
+        }
+
     }
 }

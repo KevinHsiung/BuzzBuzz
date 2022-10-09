@@ -10,13 +10,21 @@ import { ProductFormComponent } from './product/product-form/product-form.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { CustomerInfoComponent } from './v2/customer/customer-info/customer-info.component';
+import { HomeComponent } from './v2/home/home/home.component';
+import { ProductInfoComponent } from './v2/product/product-info/product-info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomerComponent,
     ProductComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    DashboardComponent,
+    CustomerInfoComponent,
+    HomeComponent,
+    ProductInfoComponent
   ],
   imports: [
     BrowserModule,

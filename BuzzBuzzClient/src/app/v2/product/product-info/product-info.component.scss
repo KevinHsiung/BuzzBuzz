@@ -1,0 +1,37 @@
+.btn{
+    border:0;
+    &.active.asc{
+        .fa-sort-up{
+            color:red;
+        }
+    }
+
+    &.active.desc{
+        .fa-sort-down{
+            color:red;
+        }
+    }
+}
+
+table{
+    & tbody,thead{
+        cursor: pointer;
+        max-height: 600px;
+        overflow:scroll;
+        display: block;
+        overflow: auto;
+         tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;/* even columns width , fix width of table too*/
+        }
+    }
+}
+
+.pagination{
+    display:flex;
+    justify-content: space-between;
+    .form-select{
+        max-width:100px;
+    }
+}
