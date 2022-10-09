@@ -39,5 +39,5 @@ Backend
 
 Run in IISexpress to start the backend server. Backend server should automatically open at `https://localhost:44354/swagger/index.html`.
 
-
+Note: There's a CORS policy in place to allow localhost:4200 only.
 
