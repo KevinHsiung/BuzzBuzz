@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { Customer } from '../models/customer';
-
+import { Observable, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-  url = "https://localhost:44354/api/customer";
+  url = environment.url + "customer";
   private customerIdSubject = new Subject<[string,number]>();
   customerId = this.customerIdSubject.asObservable();
   

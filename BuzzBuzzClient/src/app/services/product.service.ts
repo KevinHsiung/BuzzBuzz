@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Subject } from 'rxjs';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  url = "https://localhost:44354/api/product"
+  url = environment.url + "product";
   private customerIdSubject = new Subject<number>();
   customerId = this.customerIdSubject.asObservable();
 

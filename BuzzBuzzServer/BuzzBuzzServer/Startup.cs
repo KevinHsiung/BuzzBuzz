@@ -32,7 +32,7 @@ namespace BuzzBuzzServer
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Buzz Buzz Coding Exercise",
+                    Title = "Buzz Buzz Coding Challenge",
                 });
             });
 
@@ -41,7 +41,7 @@ namespace BuzzBuzzServer
                 options.AddPolicy(name: "allowed",
                     policy =>
                     {
-                        policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+                        policy.AllowAnyOrigin()
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                                       
