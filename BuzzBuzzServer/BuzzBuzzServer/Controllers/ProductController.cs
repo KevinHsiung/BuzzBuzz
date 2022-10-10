@@ -1,8 +1,6 @@
-﻿using BuzzBuzzServer.Context;
-using BuzzBuzzServer.Models;
-using Microsoft.AspNetCore.Http;
+﻿using BuzzBuzzServer.Models;
+using BuzzBuzzServer.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,22 +10,25 @@ namespace BuzzBuzzServer.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private IApplicationDbContext _context;
-        public ProductController(IApplicationDbContext context)
+        private ICustomerRepository _customerRepository;
+        private IProductRepository _productRepository;
+
+        public ProductController(ICustomerRepository customerRepository, IProductRepository productRepository)
         {
-            _context = context;
+            _customerRepository = customerRepository;
+            _productRepository = productRepository;
         }
+
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody]Product product)
         {
             try
             {
-                var customer = _context.Customers.Include(x=>x.Products).FirstOrDefault(x => x.Id == product.CustomerId);
-                if(customer != null)
+                var customer = _customerRepository.GetById(product.CustomerId);
+                if (customer != null)
                 {
-                    customer.Products.Add(product);
-                    await  _context.SaveChanges();
+                    _productRepository.AddToProduct(product);
                     return Ok();
                 }
                 return BadRequest();
@@ -44,11 +45,9 @@ namespace BuzzBuzzServer.Controllers
         {
             try
             {
-                var product = _context.Products.FirstOrDefault(x=>x.Id == id);
-                if(product != null && delete)
+                if (delete)
                 {
-                    product.Status = ProductStatus.Deleted;
-                    await _context.SaveChanges();
+                    _productRepository.DeleteProduct(id);
                     return Ok();
                 }
                 return BadRequest();
@@ -64,16 +63,8 @@ namespace BuzzBuzzServer.Controllers
         {
             try
             {
-                var item = _context.Products.FirstOrDefault(x => x.Id == product.Id);
-                if (item != null)
-                {
-                    item.Price = product.Price;
-                    item.Name = product.Name;
-                    _context.Products.Update(item);
-                    await _context.SaveChanges();
-                    return Ok();
-                }
-                return BadRequest();
+                _productRepository.UpdateProduct(product);
+                return Ok();
             }
             catch (System.Exception ex)
             {
@@ -86,7 +77,7 @@ namespace BuzzBuzzServer.Controllers
         {
             if (id.HasValue)
             {
-                var product = _context.Products.FirstOrDefault(x => x.Id == id.Value);
+                var product = _productRepository.GetById(id.Value);
                 return Ok(product);
             }
             return BadRequest();
@@ -96,7 +87,7 @@ namespace BuzzBuzzServer.Controllers
         [Route("GetAllByCustomerId/{id}")]
         public ActionResult GetAllByCustomerId([FromRoute] int id)
         {
-            var product = _context.Products.Where(x => x.CustomerId == id).ToList() ;
+            var product = _productRepository.GetAllByCustomerId(id);
             return Ok(product);
         }
 
@@ -104,8 +95,8 @@ namespace BuzzBuzzServer.Controllers
         [Route("GetProductWithFilter")]
         public ActionResult GetProductWithFilter(int id, int skip, int take, bool isAsc = true, string column = "id")
         {
-            var total = _context.Products.Count(x => x.CustomerId == id);
-            var products = _context.Products.Where(x => x.CustomerId == id).Skip(skip).Take(take);
+            var total = _productRepository.GetProductCountByCustomerId(id);
+            var products = _productRepository.GetAllWithFilter(id, skip, take);
             switch (column)
             {
                 case "name":
