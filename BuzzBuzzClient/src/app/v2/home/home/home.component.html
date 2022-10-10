@@ -6,7 +6,7 @@
 </nav>
 <div class="container-fluid ">
     <div class="row ">
-        <div class="col-2 p-0 bg-light">
+        <div class="col-2 p-0 bg-light" style="max-width: 200px;">
             <div class="d-flex flex-column flex-shrink-0 p-3 ">
                 <a routerLink="/v2" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                   <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
@@ -29,14 +29,12 @@
                       </div>    
                   </li>
                   <li *ngIf="customerId != 0">
-                    <a routerLink="customer-info/{{customerId}}" class="nav-link link-dark"  [class.active]="isCustomerActive">
-                      <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+                    <a routerLink="customer-info/{{customerId}}" class="nav-link link-dark" style="text-align: center;" [class.active]="isCustomerActive">
                       Customer Info
                     </a>
                   </li>
                   <li *ngIf="customerId != 0">
-                    <a routerLink="product-info/{{customerId}}" class="nav-link link-dark" [class.active]="isProductActive">
-                      <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+                    <a routerLink="product-info/{{customerId}}" class="nav-link link-dark" style="text-align: center;" [class.active]="isProductActive">
                       Product Info
                     </a>
                   </li>
