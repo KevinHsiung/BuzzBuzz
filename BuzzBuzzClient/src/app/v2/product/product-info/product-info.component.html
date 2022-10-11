@@ -1,6 +1,6 @@
 <div style="display: flex;justify-content: space-between;margin-bottom: 10px;" *ngIf="products">
     <h3> Products ({{total}})</h3>
-    <button class="btn btn-success"  [routerLink]="addProductUrl">Add Product</button>
+    <button class="btn btn-success"  (click)="newForm()">Add Product</button>
     </div>
     <div class="card container-fluid p-2">
         <table class="table table-hover">

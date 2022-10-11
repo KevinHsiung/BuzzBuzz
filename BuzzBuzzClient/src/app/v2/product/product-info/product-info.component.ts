@@ -1,5 +1,5 @@
 import { Component,  OnInit } from '@angular/core';
-import { ActivatedRoute,  Router } from '@angular/router';
+import { ActivatedRoute,  NavigationEnd,  Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -22,18 +22,19 @@ export class ProductInfoComponent implements OnInit {
   total:number = 0; 
   isAscending:boolean = true;
   columnName: string= "id";
+  customerId!:number;
 
   constructor(private productService: ProductService, private router: Router,
     private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.loadProduct();
-    // this.router.events.subscribe((val) =>{
-    //   if(val instanceof NavigationEnd && val.url.includes("product-info"))
-    //   {
-    //     this.loadProduct();
-    //   }
-    // })
+    this.router.events.subscribe((val) =>{
+      if(val instanceof NavigationEnd && val.url.includes("product-info"))
+      {
+        this.loadProduct();
+      }
+    })
   }
 
   loadProduct(){
@@ -44,8 +45,8 @@ export class ProductInfoComponent implements OnInit {
       {
         this.total = response.total;
         this.products = response.products;
+        this.customerId = id;
       });
-      //this.productService.getAllByCustomerId(id).subscribe((products:Product[]) => this.products = products);;
     }else{
       this.router.navigate(["/v2"]);
     }
@@ -59,6 +60,7 @@ export class ProductInfoComponent implements OnInit {
   OnDelete(id:any){
     if(id){
       this.productService.deleteProduct(id).subscribe(()=>{
+          this.loadProduct();
         //this.products = this.products.slice(1,this.products.length);      
       })
     }
@@ -91,16 +93,16 @@ export class ProductInfoComponent implements OnInit {
     console.log(`sorting on ${columnName}`);
   }
 
-  SortProduct(ascendingDirection: boolean, columnName: string){
-    // if(ascendingDirection){
-    //   this.products.sort((a:any, b:any) => (a[columnName] < b[columnName] ? -1 : 1));              
-    // }else{
-    //   this.products.sort((a:any, b:any) => (a[columnName] > b[columnName] ? -1 : 1));              
-    // }
-  }
+  
   editForm(id:number, customerId:number){
     this.router.navigate([`product/${customerId}/${id}`]);
   }
+
+  newForm()
+  {
+    this.router.navigate([`product/${this.customerId}`]);
+  }
+
 
 
 }

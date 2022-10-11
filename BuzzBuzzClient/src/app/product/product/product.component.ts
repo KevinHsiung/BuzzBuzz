@@ -13,23 +13,19 @@ import { ProductService } from 'src/app/services/product.service';
 
 export class ProductComponent implements OnInit {
   @Input() products!: Product[];
+  @Input() customerId!: Number;
   productId!:number;
   productName!:string;
   activesort: string = "";
   idSortAscending: boolean = true;
   nameSortAscending: boolean = true;
   priceSortAscending: boolean = true;
-  addProductUrl:string = "";
-
   page = 1;
   pageSize = 10;
 
   constructor(private productService: ProductService, private router: Router) { }
 
   ngOnInit(): void {
-    if(this.products){
-      this.addProductUrl = `/product/${this.products[0].customerId}`; 
-    }
   }
 
   setProductId(id: number, name:string){
@@ -72,7 +68,11 @@ export class ProductComponent implements OnInit {
       this.products.sort((a:any, b:any) => (a[columnName] > b[columnName] ? -1 : 1));              
     }
   }
-  editForm(id:number, customerId:number){
-    this.router.navigate([`product/${customerId}/${id}`]);
+  editForm(id:number){
+    this.router.navigate([`product/${this.customerId}/${id}`]);
+  }
+  newForm()
+  {
+    this.router.navigate([`product/${this.customerId}`]);
   }
 }

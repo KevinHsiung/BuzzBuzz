@@ -61,6 +61,11 @@ export class HomeComponent implements OnInit {
     this.isProductActive = false;
   }
 
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+    this.prodSubscription.unsubscribe();
+  }
+
   // GoToCustomerDetails(id){
   //   return null;
   // }

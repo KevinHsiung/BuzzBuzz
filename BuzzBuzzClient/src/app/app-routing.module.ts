@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'customer', component: CustomerComponent },
+  { path: 'customer/:id', component: CustomerComponent },
   { path: 'products', component: ProductComponent },
   { path: 'product/:customerId', component: ProductFormComponent },
   { path: 'product/:customerId/:id', component: ProductFormComponent },

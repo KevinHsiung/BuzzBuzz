@@ -30,7 +30,7 @@ export class ProductFormComponent implements OnInit {
       this.productForm.patchValue({customerId: customerId});
     }
     else{
-      alert("error");
+      alert("Customer Id not found");
     }
     if(id > 0){
       this.isNewProduct = false;

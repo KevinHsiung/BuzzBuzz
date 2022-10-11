@@ -10,7 +10,7 @@
           </a>
           <ul class="dropdown-menu">
             <li *ngFor="let customer of allCustomers" >
-              <a class="dropdown-item" style="cursor: pointer;"  (click)="GetCustomer(customer.id)">
+              <a class="dropdown-item" style="cursor: pointer;"  (click)="GoToCustomer(customer.id)">
                 <span>{{customer.name}}</span>
               </a>
             </li>
@@ -60,7 +60,7 @@
         </div>
       </div>
       <div class="col-12 col-lg-9">
-            <app-product [products]="customer.products"></app-product>
+            <app-product [customerId]="customer.id" [products]="customer.products"></app-product>
       </div>
     </div>
 </div>

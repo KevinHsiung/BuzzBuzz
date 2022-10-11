@@ -1,7 +1,9 @@
 ﻿using BuzzBuzzServer.Context;
 using BuzzBuzzServer.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BuzzBuzzServer.Repository
 {
@@ -13,38 +15,52 @@ namespace BuzzBuzzServer.Repository
             _context = context;
         }        
 
-        public void AddToProduct(Product product)
+        public async Task<int> AddToProduct(Product product)
         {
             if (product != null)
             {
                 _context.Products.Add(product);
-                _context.SaveChanges();
+                return await _context.SaveChangesAsync();
             }
+            return 0;
         }
         public Product GetById(int id)
         {
             return _context.Products.FirstOrDefault(x => x.Id == id);
         }
 
-        public void DeleteProduct(int id)
+        public async Task<int> DeleteProductAsync(int id)
         {
             var product = GetById(id);
             if(product != null)
             {
                 product.Status = ProductStatus.Deleted;
-                _context.SaveChanges();
+                _context.Products.Update(product);
+                return await _context.SaveChangesAsync();
             }
+            return 0;
         }
 
-        public void UpdateProduct(Product product)
+        public async Task<int> UpdateProductAsync(Product product)
         {
-            var dbProduct = GetById(product.Id);
-            if(dbProduct != null)
+            try
             {
-                dbProduct.Price = product.Price;
-                dbProduct.Name = product.Name;
-                _context.SaveChanges();
+                var dbProduct = _context.Products.FirstOrDefault(x => x.Id == product.Id);
+                if (dbProduct != null)
+                {
+                    dbProduct.Price = product.Price;
+                    dbProduct.Name = product.Name;
+                    _context.Products.Update(dbProduct);
+                    return await _context.SaveChangesAsync();
+                }
+                return 0;
             }
+            catch (System.Exception ex)
+            {
+
+                throw ex;                
+            }
+       
         }
 
         public List<Product> GetAllByCustomerId(int id)

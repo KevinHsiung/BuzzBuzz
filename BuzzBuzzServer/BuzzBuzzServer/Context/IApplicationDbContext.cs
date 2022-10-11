@@ -1,5 +1,6 @@
 ﻿using BuzzBuzzServer.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BuzzBuzzServer.Context
@@ -9,6 +10,6 @@ namespace BuzzBuzzServer.Context
         DbSet<Customer> Customers { get; set; }
         DbSet<Product> Products { get; set; }
 
-        Task<int> SaveChanges();
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

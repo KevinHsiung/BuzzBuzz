@@ -28,7 +28,7 @@ namespace BuzzBuzzServer.Controllers
                 var customer = _customerRepository.GetById(product.CustomerId);
                 if (customer != null)
                 {
-                    _productRepository.AddToProduct(product);
+                    await _productRepository.AddToProduct(product);
                     return Ok();
                 }
                 return BadRequest();
@@ -47,7 +47,7 @@ namespace BuzzBuzzServer.Controllers
             {
                 if (delete)
                 {
-                    _productRepository.DeleteProduct(id);
+                    await _productRepository.DeleteProductAsync(id);
                     return Ok();
                 }
                 return BadRequest();
@@ -63,7 +63,7 @@ namespace BuzzBuzzServer.Controllers
         {
             try
             {
-                _productRepository.UpdateProduct(product);
+                await _productRepository.UpdateProductAsync(product);
                 return Ok();
             }
             catch (System.Exception ex)

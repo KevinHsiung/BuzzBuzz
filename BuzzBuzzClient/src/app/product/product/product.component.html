@@ -1,6 +1,6 @@
 <div style="display: flex;justify-content: space-between;margin-bottom: 10px;">
 <h3> Products ({{products.length}})</h3>
-<button class="btn btn-success"  [routerLink]="addProductUrl">Add Product</button>
+<button class="btn btn-success" (click)="newForm()">Add Product</button>
 </div>
 <div class="card container-fluid p-2">
     <table class="table table-hover">
@@ -38,9 +38,9 @@
         </thead>
         <tbody class=" table-hover">
           <tr *ngFor="let product of products | slice: (page-1) * pageSize : page * pageSize" class="product-row">
-            <th (click)="editForm(product.id, product.customerId)" scope="row">{{product.id}}</th>
-            <td (click)="editForm(product.id, product.customerId)">{{product.name}}</td>
-            <td (click)="editForm(product.id, product.customerId)">{{product.price | currency}}</td>
+            <th (click)="editForm(product.id)" scope="row">{{product.id}}</th>
+            <td (click)="editForm(product.id)">{{product.name}}</td>
+            <td (click)="editForm(product.id)">{{product.price | currency}}</td>
             <td>
                 <div class="btn-group">
                     <a style="cursor:pointer; font-size:20px; z-index:100" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">

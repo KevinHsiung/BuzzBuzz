@@ -17,14 +17,12 @@ export class CustomerInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetCustomer();
-    // this.router.events.subscribe((val) =>{
-    //   if(val instanceof NavigationEnd && val.url.includes("customer-info"))
-    //   {
-    //     console.log(val);
-    //     console.log("firing 2" );
-    //     this.GetCustomer();
-    //   }
-    // })
+    this.router.events.subscribe((val) =>{
+      if(val instanceof NavigationEnd && val.url.includes("customer-info"))
+      {
+        this.GetCustomer();
+      }
+    })
   }
 
   GetCustomer(): void {

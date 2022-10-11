@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BuzzBuzzServer.Context
@@ -77,7 +78,7 @@ namespace BuzzBuzzServer.Context
         }
 
 
-        public async Task<int> SaveChanges()
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             try
             {
